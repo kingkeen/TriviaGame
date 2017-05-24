@@ -5,12 +5,68 @@
 // 	Incorrect Answers
 // 	Total questions 
 
+var correctAnswer = 0;
+var incorrectAnswers = 0;
+var totalQuestions = 8;
 
 // Game Start- OnClick Start, will start game and start timer. 
 
 
 // Scope 1- Timer and timers condition that at zero the game will end. 
 
+window.onload = function () {
+	$("#starter").on("click", stopwatch.start);
+};
+
+var intervalID;
+var clockRunning = false;
+
+var stopwatch = {
+
+	time: 60,
+
+	start: function () {
+		if (!clockRunning) {
+			intervalId = setInterval(stopwatch.count, 1000);
+			clockRunning = true;
+
+		}
+
+	},
+
+	stop: function() {
+		clearInterval(intervalID);
+		clockRunning = false;
+	},
+
+	count: function() {
+		stopwatch.time--;
+		console.log(stopwatch.time);
+
+		var converted = stopwatch.timeConverter(stopwatch.time);
+		console.log(converted);
+
+		$("#timer").html(converted);
+	},
+	timeConverter: function(t) {
+		var minutes = Math.floor(t / 60);
+		var seconds = t - (minutes * 60);
+
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+
+		}
+
+		if (minutes === 0) {
+			minutes = "00";
+		}
+		else if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		return minutes + ":" + seconds;
+	},
+
+};
 // 	At timers end, the game will check for correct answers and provide a statistic
 
 

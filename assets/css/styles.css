@@ -5,6 +5,7 @@
 
 .jumbotron {
 	background-image: url(../images/kittens-01.jpg);
+	background-size: 100%, 100%; 
 }
 
 .bigbox {
@@ -23,5 +24,11 @@
 
 h1 {
 	text-align: center;
+	color: black;
+	text-shadow: 3px 3px white;	
 }
 
+.bluetext {
+	color: white;
+	text-shadow: 2px 2px black;
+}
