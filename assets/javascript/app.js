@@ -11,6 +11,13 @@ var totalQuestions = 8;
 
 // Game Start- OnClick Start, will start game and start timer. 
 
+// var answerKey[
+// 	question1: 1,
+// 	question2: 3,
+// 	question3: 2,
+// 	question4: 2,
+
+// 	];
 
 // Scope 1- Timer and timers condition that at zero the game will end. 
 
@@ -23,30 +30,35 @@ var clockRunning = false;
 
 var stopwatch = {
 
-	time: 60,
+	time: 10,
 
 	start: function () {
 		if (!clockRunning) {
 			intervalId = setInterval(stopwatch.count, 1000);
 			clockRunning = true;
-
-		}
+		};
+		$("#starter").html("");
 
 	},
 
 	stop: function() {
-		clearInterval(intervalID);
+		clearInterval(intervalId);
 		clockRunning = false;
+		stopwatch.checkAnswers();
 	},
 
 	count: function() {
 		stopwatch.time--;
-		console.log(stopwatch.time);
+		// console.log(stopwatch.time);
 
 		var converted = stopwatch.timeConverter(stopwatch.time);
 		console.log(converted);
 
 		$("#timer").html(converted);
+		if (stopwatch.time === 0) {
+			
+			stopwatch.stop();
+		}
 	},
 	timeConverter: function(t) {
 		var minutes = Math.floor(t / 60);
@@ -65,9 +77,25 @@ var stopwatch = {
 		}
 		return minutes + ":" + seconds;
 	},
+	checkAnswers: function() {
+
+
+		// insert JS into new DIV to calculate the answers. 
+
+		stopwatch.completedGame();
+
+	},
+
+	completedGame: function () {
+		// insert JS to remove the questions.
+		$("#questionsDiv").html("");
+
+		// 	At timers end, the game will check for correct answers and provide a statistic
+		var unansweredQs = totalQuestions - correctAnswer - incorrectAnswers;
+		$("#answersDiv").html("<h2 class='center'>RESULTS</H2><br><br><h3 class='center'>Correct Answers: "+correctAnswer+"<br><br><h3 class='center'>Incorrect Answers: "+incorrectAnswers+"<br><br><h3 class='center'>Unanswered Questions: " + unansweredQs + "</h3><br><br>");
+	},
 
 };
-// 	At timers end, the game will check for correct answers and provide a statistic
 
 
 // Scope 2- Questions are displayed into the HTML with radio buttons
