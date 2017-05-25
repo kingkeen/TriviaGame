@@ -7,17 +7,20 @@
 
 var correctAnswer = 0;
 var incorrectAnswers = 0;
-var totalQuestions = 8;
+var unansweredQuestions = 8;
 
 // Game Start- OnClick Start, will start game and start timer. 
 
-// var answerKey[
-// 	question1: 1,
-// 	question2: 3,
-// 	question3: 2,
-// 	question4: 2,
-
-// 	];
+var answerKey = {
+	question1: 1,
+	question2: 5,
+	question3: 9,
+	question4: 13,
+	question5: 17,
+	question6: 21,
+	question7: 25,
+	question8: 29,
+};
 
 // Scope 1- Timer and timers condition that at zero the game will end. 
 
@@ -30,7 +33,7 @@ var clockRunning = false;
 
 var stopwatch = {
 
-	time: 10,
+	time: 7,
 
 	start: function () {
 		if (!clockRunning) {
@@ -77,24 +80,42 @@ var stopwatch = {
 		}
 		return minutes + ":" + seconds;
 	},
-	checkAnswers: function() {
-
-
-		// insert JS into new DIV to calculate the answers. 
-
-		stopwatch.completedGame();
-
-	},
 
 	completedGame: function () {
 		// insert JS to remove the questions.
 		$("#questionsDiv").html("");
 
 		// 	At timers end, the game will check for correct answers and provide a statistic
-		var unansweredQs = totalQuestions - correctAnswer - incorrectAnswers;
-		$("#answersDiv").html("<h2 class='center'>RESULTS</H2><br><br><h3 class='center'>Correct Answers: "+correctAnswer+"<br><br><h3 class='center'>Incorrect Answers: "+incorrectAnswers+"<br><br><h3 class='center'>Unanswered Questions: " + unansweredQs + "</h3><br><br>");
+		$("#answersDiv").html("<h2 class='center'>RESULTS</H2><br><br><h3 class='center'>Correct Answers: "+correctAnswer+"<br><br><h3 class='center'>Incorrect Answers: "+incorrectAnswers+"<br><br><h3 class='center'>Unanswered Questions: " + unansweredQuestions + "</h3><br><br>");
 	},
+	
+	checkAnswers: function() {
+		// console.log('PRETEST')
+		var answerChecker = function(buttonElements){
+			if(!buttonElements) {
+				correctAnswer = 0;
+				incorrectAnswers = 8;
+				unansweredQuestions = 8; 
+				completedGame();
+			}
 
+			for (var i = buttonElements.length - 1; i >= 0; i--) {
+				console.log('TEST')
+				console.log(buttonElements[i].value);
+				console.log(answerKey['question1']);
+				if(buttonElements[i].value === answerKey['question1']){
+					correctAnswer++;
+					incorrectAnswers = 8 - correctAnswer; 
+				};
+			};
+		}
+
+		console.log('pretest')
+		answerChecker(($("input:radio").is(":checked"))) 
+		console.log('post-test')
+		stopwatch.completedGame();
+
+	}
 };
 
 
